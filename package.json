@@ -1,0 +1,21 @@
+{
+  "name": "aws-media-convert",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-mediaconvert": "^3.35.0",
+    "aws-sdk": "^2.1001.0",
+    "dotenv": "^10.0.0",
+    "ws": "^8.2.3"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.2.0"
+  }
+}
