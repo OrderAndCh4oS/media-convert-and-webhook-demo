@@ -4,7 +4,8 @@ import {fromIni} from '@aws-sdk/credential-provider-ini';
 import {STS} from '@aws-sdk/client-sts';
 import {
     CreateJobCommand,
-    MediaConvertClient
+    MediaConvertClient,
+    GetJobCommand
 } from '@aws-sdk/client-mediaconvert';
 import {config} from 'dotenv';
 
@@ -101,9 +102,28 @@ const command = new CreateJobCommand({
     }
 });
 
+const getJob = (data) => async () =>
+    new Promise(async (resolve, reject) => {
+        const job = await client.send(new GetJobCommand({Id: data.Job.Id}));
+        console.log('Job:', job.Job);
+        if(job.Job.Status === 'COMPLETE') {
+            resolve(true);
+            return
+        }
+        if(job.Job.Status === 'ERROR') {
+            reject(false);
+            return
+        }
+        setTimeout(getJob(data), 200);
+    })
+
+
 try {
     const data = await client.send(command);
-    console.log(data);
+    console.log(JSON.stringify(data));
+    const result = await getJob(data)();
+    console.log(result);
+
 } catch(error) {
     console.log(error)
 } finally {
