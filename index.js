@@ -123,7 +123,6 @@ try {
     console.log(JSON.stringify(data));
     const result = await getJob(data)();
     console.log(result);
-
 } catch(error) {
     console.log(error)
 } finally {
